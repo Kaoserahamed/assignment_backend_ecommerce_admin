@@ -81,15 +81,20 @@ let MediaService = class MediaService {
         let height;
         let thumbnail;
         if (type === 'image') {
-            const metadata = await (0, sharp_1.default)(file.buffer).metadata();
-            width = metadata.width;
-            height = metadata.height;
-            const thumbnailFileName = `thumb-${fileName}`;
-            const thumbnailPath = path.join(this.thumbnailDir, thumbnailFileName);
-            await (0, sharp_1.default)(file.buffer)
-                .resize(300, 300, { fit: 'cover' })
-                .toFile(thumbnailPath);
-            thumbnail = `/uploads/thumbnails/${thumbnailFileName}`;
+            try {
+                const metadata = await (0, sharp_1.default)(file.buffer).metadata();
+                width = metadata.width;
+                height = metadata.height;
+                const thumbnailFileName = `thumb-${fileName}`;
+                const thumbnailPath = path.join(this.thumbnailDir, thumbnailFileName);
+                await (0, sharp_1.default)(file.buffer)
+                    .resize(300, 300, { fit: 'cover' })
+                    .toFile(thumbnailPath);
+                thumbnail = `/uploads/thumbnails/${thumbnailFileName}`;
+            }
+            catch (sharpError) {
+                console.error('Error generating thumbnail:', sharpError);
+            }
         }
         const media = await this.prisma.media.create({
             data: {

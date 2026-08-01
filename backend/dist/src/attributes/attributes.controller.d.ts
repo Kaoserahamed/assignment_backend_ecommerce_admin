@@ -8,21 +8,21 @@ export declare class AttributesController {
     createAttribute(dto: CreateAttributeDto): Promise<{
         values: {
             id: string;
+            value: string;
+            slug: string;
+            referenceValue: string | null;
+            attributeId: string;
+            mediaId: string | null;
             createdAt: Date;
             updatedAt: Date;
-            slug: string;
-            value: string;
-            referenceValue: string | null;
-            mediaId: string | null;
-            attributeId: string;
         }[];
     } & {
         id: string;
         name: string;
+        slug: string;
+        type: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
-        slug: string;
     }>;
     getAllAttributes(): Promise<{
         valueCount: number;
@@ -34,10 +34,6 @@ export declare class AttributesController {
         values: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -47,24 +43,28 @@ export declare class AttributesController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             } | null;
         } & {
             id: string;
+            value: string;
+            slug: string;
+            referenceValue: string | null;
+            attributeId: string;
+            mediaId: string | null;
             createdAt: Date;
             updatedAt: Date;
-            slug: string;
-            value: string;
-            referenceValue: string | null;
-            mediaId: string | null;
-            attributeId: string;
         })[];
         id: string;
         name: string;
+        slug: string;
+        type: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
-        slug: string;
     }[]>;
     getAttributeById(id: string): Promise<{
         valueCount: number;
@@ -76,10 +76,6 @@ export declare class AttributesController {
         values: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -89,33 +85,33 @@ export declare class AttributesController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             } | null;
         } & {
             id: string;
+            value: string;
+            slug: string;
+            referenceValue: string | null;
+            attributeId: string;
+            mediaId: string | null;
             createdAt: Date;
             updatedAt: Date;
-            slug: string;
-            value: string;
-            referenceValue: string | null;
-            mediaId: string | null;
-            attributeId: string;
         })[];
         id: string;
         name: string;
+        slug: string;
+        type: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
-        slug: string;
     }>;
     updateAttribute(id: string, dto: UpdateAttributeDto): Promise<{
         values: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -125,25 +121,29 @@ export declare class AttributesController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             } | null;
         } & {
             id: string;
+            value: string;
+            slug: string;
+            referenceValue: string | null;
+            attributeId: string;
+            mediaId: string | null;
             createdAt: Date;
             updatedAt: Date;
-            slug: string;
-            value: string;
-            referenceValue: string | null;
-            mediaId: string | null;
-            attributeId: string;
         })[];
     } & {
         id: string;
         name: string;
+        slug: string;
+        type: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
-        slug: string;
     }>;
     deleteAttribute(id: string): Promise<{
         message: string;
@@ -151,10 +151,6 @@ export declare class AttributesController {
     createAttributeValue(attributeId: string, dto: CreateAttributeValueDto): Promise<{
         media: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -164,33 +160,33 @@ export declare class AttributesController {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         attribute: {
             id: string;
             name: string;
+            slug: string;
+            type: string;
             createdAt: Date;
             updatedAt: Date;
-            type: string;
-            slug: string;
         };
     } & {
         id: string;
+        value: string;
+        slug: string;
+        referenceValue: string | null;
+        attributeId: string;
+        mediaId: string | null;
         createdAt: Date;
         updatedAt: Date;
-        slug: string;
-        value: string;
-        referenceValue: string | null;
-        mediaId: string | null;
-        attributeId: string;
     }>;
     getAttributeValues(attributeId: string): Promise<({
         media: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -200,25 +196,25 @@ export declare class AttributesController {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
     } & {
         id: string;
+        value: string;
+        slug: string;
+        referenceValue: string | null;
+        attributeId: string;
+        mediaId: string | null;
         createdAt: Date;
         updatedAt: Date;
-        slug: string;
-        value: string;
-        referenceValue: string | null;
-        mediaId: string | null;
-        attributeId: string;
     })[]>;
     getAttributeValueById(attributeId: string, valueId: string): Promise<{
         media: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -228,33 +224,33 @@ export declare class AttributesController {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         attribute: {
             id: string;
             name: string;
+            slug: string;
+            type: string;
             createdAt: Date;
             updatedAt: Date;
-            type: string;
-            slug: string;
         };
     } & {
         id: string;
+        value: string;
+        slug: string;
+        referenceValue: string | null;
+        attributeId: string;
+        mediaId: string | null;
         createdAt: Date;
         updatedAt: Date;
-        slug: string;
-        value: string;
-        referenceValue: string | null;
-        mediaId: string | null;
-        attributeId: string;
     }>;
     updateAttributeValue(attributeId: string, valueId: string, dto: Partial<CreateAttributeValueDto>): Promise<{
         media: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -264,25 +260,29 @@ export declare class AttributesController {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         attribute: {
             id: string;
             name: string;
+            slug: string;
+            type: string;
             createdAt: Date;
             updatedAt: Date;
-            type: string;
-            slug: string;
         };
     } & {
         id: string;
+        value: string;
+        slug: string;
+        referenceValue: string | null;
+        attributeId: string;
+        mediaId: string | null;
         createdAt: Date;
         updatedAt: Date;
-        slug: string;
-        value: string;
-        referenceValue: string | null;
-        mediaId: string | null;
-        attributeId: string;
     }>;
     deleteAttributeValue(attributeId: string, valueId: string): Promise<{
         message: string;

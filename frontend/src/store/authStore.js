@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from '../lib/axios';
+import { getErrorMessage } from '../lib/errorMessages';
 
 const useAuthStore = create((set) => ({
   user: null,
@@ -29,7 +30,7 @@ const useAuthStore = create((set) => ({
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Login failed',
+        message: getErrorMessage(error, 'Login failed. Please try again'),
       };
     }
   },

@@ -10,9 +10,9 @@ export declare class PermissionsController {
             id: string;
             name: string;
             description: string | null;
+            groupId: string;
             createdAt: Date;
             updatedAt: Date;
-            groupId: string;
         }[];
     } & {
         id: string;
@@ -26,9 +26,9 @@ export declare class PermissionsController {
             id: string;
             name: string;
             description: string | null;
+            groupId: string;
             createdAt: Date;
             updatedAt: Date;
-            groupId: string;
         }[];
         _count: {
             permissions: number;
@@ -45,9 +45,9 @@ export declare class PermissionsController {
             id: string;
             name: string;
             description: string | null;
+            groupId: string;
             createdAt: Date;
             updatedAt: Date;
-            groupId: string;
         }[];
     } & {
         id: string;
@@ -61,9 +61,9 @@ export declare class PermissionsController {
             id: string;
             name: string;
             description: string | null;
+            groupId: string;
             createdAt: Date;
             updatedAt: Date;
-            groupId: string;
         }[];
     } & {
         id: string;
@@ -87,9 +87,9 @@ export declare class PermissionsController {
         id: string;
         name: string;
         description: string | null;
+        groupId: string;
         createdAt: Date;
         updatedAt: Date;
-        groupId: string;
     }>;
     getAllPermissions(groupId?: string): Promise<({
         group: {
@@ -103,9 +103,9 @@ export declare class PermissionsController {
         id: string;
         name: string;
         description: string | null;
+        groupId: string;
         createdAt: Date;
         updatedAt: Date;
-        groupId: string;
     })[]>;
     getPermissionById(id: string): Promise<{
         group: {
@@ -119,9 +119,9 @@ export declare class PermissionsController {
         id: string;
         name: string;
         description: string | null;
+        groupId: string;
         createdAt: Date;
         updatedAt: Date;
-        groupId: string;
     }>;
     updatePermission(id: string, dto: Partial<CreatePermissionDto>): Promise<{
         group: {
@@ -135,9 +135,9 @@ export declare class PermissionsController {
         id: string;
         name: string;
         description: string | null;
+        groupId: string;
         createdAt: Date;
         updatedAt: Date;
-        groupId: string;
     }>;
     deletePermission(id: string): Promise<{
         message: string;

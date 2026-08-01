@@ -49,7 +49,7 @@ let RolesController = class RolesController {
 exports.RolesController = RolesController;
 __decorate([
     (0, common_1.Post)(),
-    (0, permissions_decorator_1.RequirePermissions)('roles.create'),
+    (0, permissions_decorator_1.RequirePermissions)('role:create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_role_dto_1.CreateRoleDto]),
@@ -57,7 +57,7 @@ __decorate([
 ], RolesController.prototype, "createRole", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('roles.view'),
+    (0, permissions_decorator_1.RequirePermissions)('role:read'),
     __param(0, (0, common_1.Query)('includeInactive')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -65,7 +65,7 @@ __decorate([
 ], RolesController.prototype, "getAllRoles", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('roles.view'),
+    (0, permissions_decorator_1.RequirePermissions)('role:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -73,7 +73,7 @@ __decorate([
 ], RolesController.prototype, "getRoleById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('roles.update'),
+    (0, permissions_decorator_1.RequirePermissions)('role:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -82,7 +82,7 @@ __decorate([
 ], RolesController.prototype, "updateRole", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('roles.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('role:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -90,7 +90,7 @@ __decorate([
 ], RolesController.prototype, "deleteRole", null);
 __decorate([
     (0, common_1.Post)(':id/permissions'),
-    (0, permissions_decorator_1.RequirePermissions)('roles.update'),
+    (0, permissions_decorator_1.RequirePermissions)('role:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -99,7 +99,7 @@ __decorate([
 ], RolesController.prototype, "assignPermissions", null);
 __decorate([
     (0, common_1.Get)(':id/permissions'),
-    (0, permissions_decorator_1.RequirePermissions)('roles.view'),
+    (0, permissions_decorator_1.RequirePermissions)('role:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

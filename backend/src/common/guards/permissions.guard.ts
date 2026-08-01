@@ -33,6 +33,9 @@ export class PermissionsGuard implements CanActivate {
       throw new ForbiddenException('Access denied');
     }
 
+    // Check for exact permission match only
+    // watch = can see menu, read = can read data
+    // These are separate permissions per the assignment spec
     const hasPermission = requiredPermissions.some((permission) =>
       user.permissions.includes(permission),
     );

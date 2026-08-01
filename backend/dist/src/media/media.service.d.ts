@@ -17,10 +17,6 @@ export declare class MediaService {
         };
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        altText: string | null;
-        title: string | null;
         fileName: string;
         storedPath: string;
         publicUrl: string;
@@ -30,7 +26,11 @@ export declare class MediaService {
         width: number | null;
         height: number | null;
         thumbnail: string | null;
+        altText: string | null;
+        title: string | null;
         uploadedById: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     private validateFile;
     getAllMedia(page?: number, limit?: number, type?: string, search?: string): Promise<{
@@ -42,10 +42,6 @@ export declare class MediaService {
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -55,7 +51,11 @@ export declare class MediaService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         })[];
         meta: {
             total: number;
@@ -72,10 +72,6 @@ export declare class MediaService {
         };
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        altText: string | null;
-        title: string | null;
         fileName: string;
         storedPath: string;
         publicUrl: string;
@@ -85,7 +81,11 @@ export declare class MediaService {
         width: number | null;
         height: number | null;
         thumbnail: string | null;
+        altText: string | null;
+        title: string | null;
         uploadedById: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateMedia(id: string, dto: UpdateMediaDto): Promise<{
         uploadedBy: {
@@ -95,10 +95,6 @@ export declare class MediaService {
         };
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        altText: string | null;
-        title: string | null;
         fileName: string;
         storedPath: string;
         publicUrl: string;
@@ -108,7 +104,11 @@ export declare class MediaService {
         width: number | null;
         height: number | null;
         thumbnail: string | null;
+        altText: string | null;
+        title: string | null;
         uploadedById: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     deleteMedia(id: string): Promise<{
         message: string;

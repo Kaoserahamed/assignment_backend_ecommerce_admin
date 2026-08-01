@@ -12,13 +12,13 @@ export class ProductsController {
   // Products
 
   @Post()
-  @RequirePermissions('products.create')
+  @RequirePermissions('product:create')
   async createProduct(@Body() dto: CreateProductDto) {
     return this.productsService.createProduct(dto);
   }
 
   @Get()
-  @RequirePermissions('products.view')
+  @RequirePermissions('product:read')
   async getAllProducts(
     @Query('page', ParseIntPipe) page = 1,
     @Query('limit', ParseIntPipe) limit = 20,
@@ -42,19 +42,19 @@ export class ProductsController {
   }
 
   @Get(':id')
-  @RequirePermissions('products.view')
+  @RequirePermissions('product:read')
   async getProductById(@Param('id') id: string) {
     return this.productsService.getProductById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('products.update')
+  @RequirePermissions('product:update')
   async updateProduct(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     return this.productsService.updateProduct(id, dto);
   }
 
   @Delete(':id')
-  @RequirePermissions('products.delete')
+  @RequirePermissions('product:delete')
   async deleteProduct(@Param('id') id: string) {
     return this.productsService.deleteProduct(id);
   }
@@ -62,7 +62,7 @@ export class ProductsController {
   // Product Variants (nested routes)
 
   @Post(':id/variants')
-  @RequirePermissions('products.create')
+  @RequirePermissions('product:create')
   async createVariant(
     @Param('id') productId: string,
     @Body() dto: CreateVariantDto,
@@ -71,13 +71,13 @@ export class ProductsController {
   }
 
   @Get(':id/variants')
-  @RequirePermissions('products.view')
+  @RequirePermissions('product:read')
   async getProductVariants(@Param('id') productId: string) {
     return this.productsService.getProductVariants(productId);
   }
 
   @Get(':id/variants/:variantId')
-  @RequirePermissions('products.view')
+  @RequirePermissions('product:read')
   async getVariantById(
     @Param('id') productId: string,
     @Param('variantId') variantId: string,
@@ -86,7 +86,7 @@ export class ProductsController {
   }
 
   @Put(':id/variants/:variantId')
-  @RequirePermissions('products.update')
+  @RequirePermissions('product:update')
   async updateVariant(
     @Param('id') productId: string,
     @Param('variantId') variantId: string,
@@ -96,7 +96,7 @@ export class ProductsController {
   }
 
   @Delete(':id/variants/:variantId')
-  @RequirePermissions('products.delete')
+  @RequirePermissions('product:delete')
   async deleteVariant(
     @Param('id') productId: string,
     @Param('variantId') variantId: string,

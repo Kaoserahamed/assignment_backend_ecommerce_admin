@@ -44,18 +44,24 @@ export class MediaService {
 
     // Generate thumbnail for images
     if (type === 'image') {
-      const metadata = await sharp(file.buffer).metadata();
-      width = metadata.width;
-      height = metadata.height;
+      try {
+        const metadata = await sharp(file.buffer).metadata();
+        width = metadata.width;
+        height = metadata.height;
 
-      const thumbnailFileName = `thumb-${fileName}`;
-      const thumbnailPath = path.join(this.thumbnailDir, thumbnailFileName);
+        const thumbnailFileName = `thumb-${fileName}`;
+        const thumbnailPath = path.join(this.thumbnailDir, thumbnailFileName);
 
-      await sharp(file.buffer)
-        .resize(300, 300, { fit: 'cover' })
-        .toFile(thumbnailPath);
+        await sharp(file.buffer)
+          .resize(300, 300, { fit: 'cover' })
+          .toFile(thumbnailPath);
 
-      thumbnail = `/uploads/thumbnails/${thumbnailFileName}`;
+        thumbnail = `/uploads/thumbnails/${thumbnailFileName}`;
+      } catch (sharpError) {
+        console.error('Error generating thumbnail:', sharpError);
+        // Continue without thumbnail if Sharp fails
+        // This allows image uploads to work even if thumbnail generation fails
+      }
     }
 
     // Save to database

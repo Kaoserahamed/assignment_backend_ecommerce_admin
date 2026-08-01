@@ -60,7 +60,7 @@ let ProductsController = class ProductsController {
 exports.ProductsController = ProductsController;
 __decorate([
     (0, common_1.Post)(),
-    (0, permissions_decorator_1.RequirePermissions)('products.create'),
+    (0, permissions_decorator_1.RequirePermissions)('product:create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
@@ -68,7 +68,7 @@ __decorate([
 ], ProductsController.prototype, "createProduct", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('products.view'),
+    (0, permissions_decorator_1.RequirePermissions)('product:read'),
     __param(0, (0, common_1.Query)('page', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Query)('search')),
@@ -82,7 +82,7 @@ __decorate([
 ], ProductsController.prototype, "getAllProducts", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('products.view'),
+    (0, permissions_decorator_1.RequirePermissions)('product:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -90,7 +90,7 @@ __decorate([
 ], ProductsController.prototype, "getProductById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('products.update'),
+    (0, permissions_decorator_1.RequirePermissions)('product:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -99,7 +99,7 @@ __decorate([
 ], ProductsController.prototype, "updateProduct", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('products.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('product:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -107,7 +107,7 @@ __decorate([
 ], ProductsController.prototype, "deleteProduct", null);
 __decorate([
     (0, common_1.Post)(':id/variants'),
-    (0, permissions_decorator_1.RequirePermissions)('products.create'),
+    (0, permissions_decorator_1.RequirePermissions)('product:create'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -116,7 +116,7 @@ __decorate([
 ], ProductsController.prototype, "createVariant", null);
 __decorate([
     (0, common_1.Get)(':id/variants'),
-    (0, permissions_decorator_1.RequirePermissions)('products.view'),
+    (0, permissions_decorator_1.RequirePermissions)('product:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -124,7 +124,7 @@ __decorate([
 ], ProductsController.prototype, "getProductVariants", null);
 __decorate([
     (0, common_1.Get)(':id/variants/:variantId'),
-    (0, permissions_decorator_1.RequirePermissions)('products.view'),
+    (0, permissions_decorator_1.RequirePermissions)('product:read'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('variantId')),
     __metadata("design:type", Function),
@@ -133,7 +133,7 @@ __decorate([
 ], ProductsController.prototype, "getVariantById", null);
 __decorate([
     (0, common_1.Put)(':id/variants/:variantId'),
-    (0, permissions_decorator_1.RequirePermissions)('products.update'),
+    (0, permissions_decorator_1.RequirePermissions)('product:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('variantId')),
     __param(2, (0, common_1.Body)()),
@@ -143,7 +143,7 @@ __decorate([
 ], ProductsController.prototype, "updateVariant", null);
 __decorate([
     (0, common_1.Delete)(':id/variants/:variantId'),
-    (0, permissions_decorator_1.RequirePermissions)('products.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('product:delete'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('variantId')),
     __metadata("design:type", Function),

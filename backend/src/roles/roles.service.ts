@@ -17,23 +17,52 @@ export class RolesService {
       throw new ConflictException('Role with this name already exists');
     }
 
-    const role = await this.prisma.role.create({
-      data: {
-        name: dto.name,
-        description: dto.description,
-        status: dto.status ?? true,
-      },
-      include: {
-        permissions: {
-          include: {
-            permission: {
-              include: {
-                group: true,
+    // Verify all permissions exist if provided
+    if (dto.permissionIds && dto.permissionIds.length > 0) {
+      const permissions = await this.prisma.permission.findMany({
+        where: { id: { in: dto.permissionIds } },
+      });
+
+      if (permissions.length !== dto.permissionIds.length) {
+        throw new BadRequestException('One or more permissions not found');
+      }
+    }
+
+    // Create role with permissions in one transaction
+    const role = await this.prisma.$transaction(async (tx) => {
+      const newRole = await tx.role.create({
+        data: {
+          name: dto.name,
+          description: dto.description,
+          status: dto.status ?? true,
+        },
+      });
+
+      // Assign permissions if provided
+      if (dto.permissionIds && dto.permissionIds.length > 0) {
+        await tx.rolePermission.createMany({
+          data: dto.permissionIds.map((permissionId) => ({
+            roleId: newRole.id,
+            permissionId,
+          })),
+        });
+      }
+
+      // Return role with permissions
+      return await tx.role.findUnique({
+        where: { id: newRole.id },
+        include: {
+          permissions: {
+            include: {
+              permission: {
+                include: {
+                  group: true,
+                },
               },
             },
           },
         },
-      },
+      });
     });
 
     return role;

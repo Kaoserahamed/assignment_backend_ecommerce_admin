@@ -7,10 +7,6 @@ export declare class CategoriesService {
     createCategory(dto: CreateCategoryDto): Promise<{
         image: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -20,43 +16,47 @@ export declare class CategoriesService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         parent: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         children: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
     } & {
         id: string;
         name: string;
-        description: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
+        description: string | null;
         imageId: string | null;
         parentId: string | null;
+        active: boolean;
         sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getAllCategories(includeInactive?: boolean): Promise<({
         _count: {
@@ -64,10 +64,6 @@ export declare class CategoriesService {
         };
         image: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -77,43 +73,47 @@ export declare class CategoriesService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         parent: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         children: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
     } & {
         id: string;
         name: string;
-        description: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
+        description: string | null;
         imageId: string | null;
         parentId: string | null;
+        active: boolean;
         sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
     getCategoryTree(): Promise<any[]>;
     getCategoryById(id: string): Promise<{
@@ -122,10 +122,6 @@ export declare class CategoriesService {
         };
         image: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -135,51 +131,51 @@ export declare class CategoriesService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         parent: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         children: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
     } & {
         id: string;
         name: string;
-        description: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
+        description: string | null;
         imageId: string | null;
         parentId: string | null;
+        active: boolean;
         sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateCategory(id: string, dto: UpdateCategoryDto): Promise<{
         image: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -189,43 +185,47 @@ export declare class CategoriesService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         parent: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         children: {
             id: string;
             name: string;
-            description: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
+            description: string | null;
             imageId: string | null;
             parentId: string | null;
+            active: boolean;
             sortOrder: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
     } & {
         id: string;
         name: string;
-        description: string | null;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
+        description: string | null;
         imageId: string | null;
         parentId: string | null;
+        active: boolean;
         sortOrder: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     deleteCategory(id: string): Promise<{
         message: string;

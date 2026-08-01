@@ -15,7 +15,7 @@ async function bootstrap() {
         forbidNonWhitelisted: true,
         transform: true,
     }));
-    app.useStaticAssets((0, path_1.join)(__dirname, '..', 'uploads'), {
+    app.useStaticAssets((0, path_1.join)(__dirname, '..', '..', 'uploads'), {
         prefix: '/uploads/',
     });
     const port = process.env.PORT || 3000;

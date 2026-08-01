@@ -47,7 +47,7 @@ let MediaController = class MediaController {
 exports.MediaController = MediaController;
 __decorate([
     (0, common_1.Post)('upload'),
-    (0, permissions_decorator_1.RequirePermissions)('media.create'),
+    (0, permissions_decorator_1.RequirePermissions)('media:upload'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.UploadedFile)()),
     __param(1, (0, common_1.Body)()),
@@ -58,7 +58,7 @@ __decorate([
 ], MediaController.prototype, "uploadMedia", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('media.view'),
+    (0, permissions_decorator_1.RequirePermissions)('media:read'),
     __param(0, (0, common_1.Query)('page', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Query)('type')),
@@ -69,7 +69,7 @@ __decorate([
 ], MediaController.prototype, "getAllMedia", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('media.view'),
+    (0, permissions_decorator_1.RequirePermissions)('media:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -77,7 +77,7 @@ __decorate([
 ], MediaController.prototype, "getMediaById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('media.update'),
+    (0, permissions_decorator_1.RequirePermissions)('media:write'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -86,7 +86,7 @@ __decorate([
 ], MediaController.prototype, "updateMedia", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('media.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('media:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -10,37 +10,37 @@ export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  @RequirePermissions('roles.create')
+  @RequirePermissions('role:create')
   async createRole(@Body() dto: CreateRoleDto) {
     return this.rolesService.createRole(dto);
   }
 
   @Get()
-  @RequirePermissions('roles.view')
+  @RequirePermissions('role:read')
   async getAllRoles(@Query('includeInactive') includeInactive?: string) {
     return this.rolesService.getAllRoles(includeInactive === 'true');
   }
 
   @Get(':id')
-  @RequirePermissions('roles.view')
+  @RequirePermissions('role:read')
   async getRoleById(@Param('id') id: string) {
     return this.rolesService.getRoleById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('roles.update')
+  @RequirePermissions('role:update')
   async updateRole(@Param('id') id: string, @Body() dto: UpdateRoleDto) {
     return this.rolesService.updateRole(id, dto);
   }
 
   @Delete(':id')
-  @RequirePermissions('roles.delete')
+  @RequirePermissions('role:delete')
   async deleteRole(@Param('id') id: string) {
     return this.rolesService.deleteRole(id);
   }
 
   @Post(':id/permissions')
-  @RequirePermissions('roles.update')
+  @RequirePermissions('role:update')
   async assignPermissions(
     @Param('id') id: string,
     @Body() dto: AssignPermissionsDto,
@@ -49,7 +49,7 @@ export class RolesController {
   }
 
   @Get(':id/permissions')
-  @RequirePermissions('roles.view')
+  @RequirePermissions('role:read')
   async getRolePermissions(@Param('id') id: string) {
     return this.rolesService.getRolePermissions(id);
   }

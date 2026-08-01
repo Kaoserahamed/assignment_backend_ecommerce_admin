@@ -10,13 +10,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @RequirePermissions('users.create')
+  @RequirePermissions('user:create')
   async createUser(@Body() dto: CreateUserDto) {
     return this.usersService.createUser(dto);
   }
 
   @Get()
-  @RequirePermissions('users.view')
+  @RequirePermissions('user:read')
   async getAllUsers(
     @Query('page', ParseIntPipe) page = 1,
     @Query('limit', ParseIntPipe) limit = 10,
@@ -29,13 +29,13 @@ export class UsersController {
   }
 
   @Get(':id')
-  @RequirePermissions('users.view')
+  @RequirePermissions('user:read')
   async getUserById(@Param('id') id: string) {
     return this.usersService.getUserById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('users.update')
+  @RequirePermissions('user:update')
   async updateUser(
     @Param('id') id: string,
     @Body() dto: UpdateUserDto,
@@ -45,7 +45,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @RequirePermissions('users.delete')
+  @RequirePermissions('user:delete')
   async deleteUser(@Param('id') id: string, @CurrentUser() user: any) {
     return this.usersService.deleteUser(id, user.userId);
   }

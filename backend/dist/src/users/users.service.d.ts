@@ -11,9 +11,9 @@ export declare class UsersService {
                     id: string;
                     name: string;
                     description: string | null;
+                    groupId: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    groupId: string;
                 };
             } & {
                 roleId: string;
@@ -23,20 +23,20 @@ export declare class UsersService {
             id: string;
             name: string;
             description: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
         };
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        roleId: string;
         email: string;
         phone: string | null;
         gender: string | null;
         avatar: string | null;
         active: boolean;
+        roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getAllUsers(page?: number, limit?: number, search?: string, roleId?: string, active?: boolean): Promise<{
         data: {
@@ -44,20 +44,20 @@ export declare class UsersService {
                 id: string;
                 name: string;
                 description: string | null;
+                status: boolean;
                 createdAt: Date;
                 updatedAt: Date;
-                status: boolean;
             };
             id: string;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            roleId: string;
             email: string;
             phone: string | null;
             gender: string | null;
             avatar: string | null;
             active: boolean;
+            roleId: string;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
         meta: {
             total: number;
@@ -81,9 +81,9 @@ export declare class UsersService {
                     id: string;
                     name: string;
                     description: string | null;
+                    groupId: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    groupId: string;
                 };
             } & {
                 roleId: string;
@@ -93,40 +93,40 @@ export declare class UsersService {
             id: string;
             name: string;
             description: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
         };
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        roleId: string;
         email: string;
         phone: string | null;
         gender: string | null;
         avatar: string | null;
         active: boolean;
+        roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateUser(id: string, dto: UpdateUserDto, currentUserId: string): Promise<{
         role: {
             id: string;
             name: string;
             description: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
         };
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        roleId: string;
         email: string;
         phone: string | null;
         gender: string | null;
         avatar: string | null;
         active: boolean;
+        roleId: string;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     deleteUser(id: string, currentUserId: string): Promise<{
         message: string;

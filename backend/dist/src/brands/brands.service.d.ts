@@ -7,10 +7,6 @@ export declare class BrandsService {
     createBrand(dto: CreateBrandDto): Promise<{
         logo: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -20,17 +16,21 @@ export declare class BrandsService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
     } & {
         id: string;
         name: string;
+        slug: string;
         description: string | null;
+        logoId: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
-        slug: string;
-        logoId: string | null;
     }>;
     getAllBrands(includeInactive?: boolean): Promise<{
         productCount: number;
@@ -39,10 +39,6 @@ export declare class BrandsService {
         };
         logo: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -52,16 +48,20 @@ export declare class BrandsService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         id: string;
         name: string;
+        slug: string;
         description: string | null;
+        logoId: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
-        slug: string;
-        logoId: string | null;
     }[]>;
     getBrandById(id: string): Promise<{
         productCount: number;
@@ -70,10 +70,6 @@ export declare class BrandsService {
         };
         logo: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -83,24 +79,24 @@ export declare class BrandsService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
         id: string;
         name: string;
+        slug: string;
         description: string | null;
+        logoId: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
-        slug: string;
-        logoId: string | null;
     }>;
     updateBrand(id: string, dto: UpdateBrandDto): Promise<{
         logo: {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            altText: string | null;
-            title: string | null;
             fileName: string;
             storedPath: string;
             publicUrl: string;
@@ -110,17 +106,21 @@ export declare class BrandsService {
             width: number | null;
             height: number | null;
             thumbnail: string | null;
+            altText: string | null;
+            title: string | null;
             uploadedById: string;
+            createdAt: Date;
+            updatedAt: Date;
         } | null;
     } & {
         id: string;
         name: string;
+        slug: string;
         description: string | null;
+        logoId: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
-        slug: string;
-        logoId: string | null;
     }>;
     deleteBrand(id: string): Promise<{
         message: string;

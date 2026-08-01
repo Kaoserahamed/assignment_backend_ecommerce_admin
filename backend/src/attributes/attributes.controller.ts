@@ -12,31 +12,31 @@ export class AttributesController {
   // Attributes
 
   @Post()
-  @RequirePermissions('attributes.create')
+  @RequirePermissions('attribute:create')
   async createAttribute(@Body() dto: CreateAttributeDto) {
     return this.attributesService.createAttribute(dto);
   }
 
   @Get()
-  @RequirePermissions('attributes.view')
+  @RequirePermissions('attribute:read')
   async getAllAttributes() {
     return this.attributesService.getAllAttributes();
   }
 
   @Get(':id')
-  @RequirePermissions('attributes.view')
+  @RequirePermissions('attribute:read')
   async getAttributeById(@Param('id') id: string) {
     return this.attributesService.getAttributeById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('attributes.update')
+  @RequirePermissions('attribute:update')
   async updateAttribute(@Param('id') id: string, @Body() dto: UpdateAttributeDto) {
     return this.attributesService.updateAttribute(id, dto);
   }
 
   @Delete(':id')
-  @RequirePermissions('attributes.delete')
+  @RequirePermissions('attribute:delete')
   async deleteAttribute(@Param('id') id: string) {
     return this.attributesService.deleteAttribute(id);
   }
@@ -44,7 +44,7 @@ export class AttributesController {
   // Attribute Values (nested routes)
 
   @Post(':id/values')
-  @RequirePermissions('attributes.create')
+  @RequirePermissions('attribute:create')
   async createAttributeValue(
     @Param('id') attributeId: string,
     @Body() dto: CreateAttributeValueDto,
@@ -53,13 +53,13 @@ export class AttributesController {
   }
 
   @Get(':id/values')
-  @RequirePermissions('attributes.view')
+  @RequirePermissions('attribute:read')
   async getAttributeValues(@Param('id') attributeId: string) {
     return this.attributesService.getAttributeValues(attributeId);
   }
 
   @Get(':id/values/:valueId')
-  @RequirePermissions('attributes.view')
+  @RequirePermissions('attribute:read')
   async getAttributeValueById(
     @Param('id') attributeId: string,
     @Param('valueId') valueId: string,
@@ -68,7 +68,7 @@ export class AttributesController {
   }
 
   @Put(':id/values/:valueId')
-  @RequirePermissions('attributes.update')
+  @RequirePermissions('attribute:update')
   async updateAttributeValue(
     @Param('id') attributeId: string,
     @Param('valueId') valueId: string,
@@ -78,7 +78,7 @@ export class AttributesController {
   }
 
   @Delete(':id/values/:valueId')
-  @RequirePermissions('attributes.delete')
+  @RequirePermissions('attribute:delete')
   async deleteAttributeValue(
     @Param('id') attributeId: string,
     @Param('valueId') valueId: string,

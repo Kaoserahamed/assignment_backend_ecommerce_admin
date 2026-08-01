@@ -9,10 +9,6 @@ export declare class ProductsController {
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -22,75 +18,51 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
-            mediaId: string;
             productId: string;
+            mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
+            sortOrder: number;
         })[];
         brand: {
             id: string;
             name: string;
+            slug: string;
             description: string | null;
+            logoId: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
-            slug: string;
-            logoId: string | null;
         } | null;
         categories: ({
             category: {
                 id: string;
                 name: string;
-                description: string | null;
-                createdAt: Date;
-                updatedAt: Date;
-                active: boolean;
                 slug: string;
+                description: string | null;
                 imageId: string | null;
                 parentId: string | null;
+                active: boolean;
                 sortOrder: number;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             productId: string;
             categoryId: string;
         })[];
-        attributes: ({
-            attribute: {
-                values: {
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
-                }[];
-            } & {
-                id: string;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                type: string;
-                slug: string;
-            };
-        } & {
-            attributeId: string;
-            productId: string;
-        })[];
         variants: ({
             media: ({
                 media: {
                     id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    altText: string | null;
-                    title: string | null;
                     fileName: string;
                     storedPath: string;
                     publicUrl: string;
@@ -100,35 +72,39 @@ export declare class ProductsController {
                     width: number | null;
                     height: number | null;
                     thumbnail: string | null;
+                    altText: string | null;
+                    title: string | null;
                     uploadedById: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                 };
             } & {
                 id: string;
-                sortOrder: number;
+                variantId: string;
                 mediaId: string;
                 isThumbnail: boolean;
                 isGallery: boolean;
-                variantId: string;
+                sortOrder: number;
             })[];
             attributeValues: ({
                 attributeValue: {
                     attribute: {
                         id: string;
                         name: string;
+                        slug: string;
+                        type: string;
                         createdAt: Date;
                         updatedAt: Date;
-                        type: string;
-                        slug: string;
                     };
                 } & {
                     id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
                     createdAt: Date;
                     updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
                 };
             } & {
                 variantId: string;
@@ -136,26 +112,46 @@ export declare class ProductsController {
             })[];
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
+            productId: string;
             sku: string;
             price: number;
             salePrice: number | null;
             stock: number;
             stockStatus: string;
-            weight: number | null;
             lowStockThreshold: number | null;
+            weight: number | null;
+            active: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+        attributes: ({
+            attribute: {
+                values: {
+                    id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
+                    createdAt: Date;
+                    updatedAt: Date;
+                }[];
+            } & {
+                id: string;
+                name: string;
+                slug: string;
+                type: string;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+        } & {
             productId: string;
+            attributeId: string;
         })[];
     } & {
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
-        sortOrder: number;
         sku: string | null;
         shortDescription: string | null;
         longDescription: string | null;
@@ -165,8 +161,12 @@ export declare class ProductsController {
         stock: number | null;
         stockStatus: string | null;
         weight: number | null;
+        active: boolean;
         featured: boolean;
+        sortOrder: number;
         brandId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getAllProducts(page?: number, limit?: number, search?: string, categoryId?: string, brandId?: string, active?: string, featured?: string): Promise<{
         data: {
@@ -174,10 +174,6 @@ export declare class ProductsController {
             media: ({
                 media: {
                     id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    altText: string | null;
-                    title: string | null;
                     fileName: string;
                     storedPath: string;
                     publicUrl: string;
@@ -187,41 +183,42 @@ export declare class ProductsController {
                     width: number | null;
                     height: number | null;
                     thumbnail: string | null;
+                    altText: string | null;
+                    title: string | null;
                     uploadedById: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                 };
             } & {
                 id: string;
-                sortOrder: number;
-                mediaId: string;
                 productId: string;
+                mediaId: string;
                 isThumbnail: boolean;
                 isGallery: boolean;
+                sortOrder: number;
             })[];
             brand: {
                 id: string;
                 name: string;
+                slug: string;
                 description: string | null;
+                logoId: string | null;
+                status: boolean;
                 createdAt: Date;
                 updatedAt: Date;
-                status: boolean;
-                slug: string;
-                logoId: string | null;
             } | null;
-            _count: {
-                variants: number;
-            };
             categories: ({
                 category: {
                     id: string;
                     name: string;
-                    description: string | null;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    active: boolean;
                     slug: string;
+                    description: string | null;
                     imageId: string | null;
                     parentId: string | null;
+                    active: boolean;
                     sortOrder: number;
+                    createdAt: Date;
+                    updatedAt: Date;
                 };
             } & {
                 productId: string;
@@ -229,25 +226,24 @@ export declare class ProductsController {
             })[];
             variants: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                active: boolean;
+                productId: string;
                 sku: string;
                 price: number;
                 salePrice: number | null;
                 stock: number;
                 stockStatus: string;
-                weight: number | null;
                 lowStockThreshold: number | null;
-                productId: string;
+                weight: number | null;
+                active: boolean;
+                createdAt: Date;
+                updatedAt: Date;
             }[];
+            _count: {
+                variants: number;
+            };
             id: string;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
-            sortOrder: number;
             sku: string | null;
             shortDescription: string | null;
             longDescription: string | null;
@@ -257,8 +253,12 @@ export declare class ProductsController {
             stock: number | null;
             stockStatus: string | null;
             weight: number | null;
+            active: boolean;
             featured: boolean;
+            sortOrder: number;
             brandId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
         meta: {
             total: number;
@@ -271,10 +271,6 @@ export declare class ProductsController {
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -284,75 +280,51 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
-            mediaId: string;
             productId: string;
+            mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
+            sortOrder: number;
         })[];
         brand: {
             id: string;
             name: string;
+            slug: string;
             description: string | null;
+            logoId: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
-            slug: string;
-            logoId: string | null;
         } | null;
         categories: ({
             category: {
                 id: string;
                 name: string;
-                description: string | null;
-                createdAt: Date;
-                updatedAt: Date;
-                active: boolean;
                 slug: string;
+                description: string | null;
                 imageId: string | null;
                 parentId: string | null;
+                active: boolean;
                 sortOrder: number;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             productId: string;
             categoryId: string;
         })[];
-        attributes: ({
-            attribute: {
-                values: {
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
-                }[];
-            } & {
-                id: string;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                type: string;
-                slug: string;
-            };
-        } & {
-            attributeId: string;
-            productId: string;
-        })[];
         variants: ({
             media: ({
                 media: {
                     id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    altText: string | null;
-                    title: string | null;
                     fileName: string;
                     storedPath: string;
                     publicUrl: string;
@@ -362,35 +334,39 @@ export declare class ProductsController {
                     width: number | null;
                     height: number | null;
                     thumbnail: string | null;
+                    altText: string | null;
+                    title: string | null;
                     uploadedById: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                 };
             } & {
                 id: string;
-                sortOrder: number;
+                variantId: string;
                 mediaId: string;
                 isThumbnail: boolean;
                 isGallery: boolean;
-                variantId: string;
+                sortOrder: number;
             })[];
             attributeValues: ({
                 attributeValue: {
                     attribute: {
                         id: string;
                         name: string;
+                        slug: string;
+                        type: string;
                         createdAt: Date;
                         updatedAt: Date;
-                        type: string;
-                        slug: string;
                     };
                 } & {
                     id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
                     createdAt: Date;
                     updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
                 };
             } & {
                 variantId: string;
@@ -398,26 +374,46 @@ export declare class ProductsController {
             })[];
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
+            productId: string;
             sku: string;
             price: number;
             salePrice: number | null;
             stock: number;
             stockStatus: string;
-            weight: number | null;
             lowStockThreshold: number | null;
+            weight: number | null;
+            active: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+        attributes: ({
+            attribute: {
+                values: {
+                    id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
+                    createdAt: Date;
+                    updatedAt: Date;
+                }[];
+            } & {
+                id: string;
+                name: string;
+                slug: string;
+                type: string;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+        } & {
             productId: string;
+            attributeId: string;
         })[];
     } & {
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
-        sortOrder: number;
         sku: string | null;
         shortDescription: string | null;
         longDescription: string | null;
@@ -427,17 +423,17 @@ export declare class ProductsController {
         stock: number | null;
         stockStatus: string | null;
         weight: number | null;
+        active: boolean;
         featured: boolean;
+        sortOrder: number;
         brandId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateProduct(id: string, dto: UpdateProductDto): Promise<{
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -447,75 +443,51 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
-            mediaId: string;
             productId: string;
+            mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
+            sortOrder: number;
         })[];
         brand: {
             id: string;
             name: string;
+            slug: string;
             description: string | null;
+            logoId: string | null;
+            status: boolean;
             createdAt: Date;
             updatedAt: Date;
-            status: boolean;
-            slug: string;
-            logoId: string | null;
         } | null;
         categories: ({
             category: {
                 id: string;
                 name: string;
-                description: string | null;
-                createdAt: Date;
-                updatedAt: Date;
-                active: boolean;
                 slug: string;
+                description: string | null;
                 imageId: string | null;
                 parentId: string | null;
+                active: boolean;
                 sortOrder: number;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             productId: string;
             categoryId: string;
         })[];
-        attributes: ({
-            attribute: {
-                values: {
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
-                }[];
-            } & {
-                id: string;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                type: string;
-                slug: string;
-            };
-        } & {
-            attributeId: string;
-            productId: string;
-        })[];
         variants: ({
             media: ({
                 media: {
                     id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    altText: string | null;
-                    title: string | null;
                     fileName: string;
                     storedPath: string;
                     publicUrl: string;
@@ -525,35 +497,39 @@ export declare class ProductsController {
                     width: number | null;
                     height: number | null;
                     thumbnail: string | null;
+                    altText: string | null;
+                    title: string | null;
                     uploadedById: string;
+                    createdAt: Date;
+                    updatedAt: Date;
                 };
             } & {
                 id: string;
-                sortOrder: number;
+                variantId: string;
                 mediaId: string;
                 isThumbnail: boolean;
                 isGallery: boolean;
-                variantId: string;
+                sortOrder: number;
             })[];
             attributeValues: ({
                 attributeValue: {
                     attribute: {
                         id: string;
                         name: string;
+                        slug: string;
+                        type: string;
                         createdAt: Date;
                         updatedAt: Date;
-                        type: string;
-                        slug: string;
                     };
                 } & {
                     id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
                     createdAt: Date;
                     updatedAt: Date;
-                    slug: string;
-                    value: string;
-                    referenceValue: string | null;
-                    mediaId: string | null;
-                    attributeId: string;
                 };
             } & {
                 variantId: string;
@@ -561,26 +537,46 @@ export declare class ProductsController {
             })[];
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
+            productId: string;
             sku: string;
             price: number;
             salePrice: number | null;
             stock: number;
             stockStatus: string;
-            weight: number | null;
             lowStockThreshold: number | null;
+            weight: number | null;
+            active: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+        })[];
+        attributes: ({
+            attribute: {
+                values: {
+                    id: string;
+                    value: string;
+                    slug: string;
+                    referenceValue: string | null;
+                    attributeId: string;
+                    mediaId: string | null;
+                    createdAt: Date;
+                    updatedAt: Date;
+                }[];
+            } & {
+                id: string;
+                name: string;
+                slug: string;
+                type: string;
+                createdAt: Date;
+                updatedAt: Date;
+            };
+        } & {
             productId: string;
+            attributeId: string;
         })[];
     } & {
         id: string;
         name: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
         slug: string;
-        sortOrder: number;
         sku: string | null;
         shortDescription: string | null;
         longDescription: string | null;
@@ -590,8 +586,12 @@ export declare class ProductsController {
         stock: number | null;
         stockStatus: string | null;
         weight: number | null;
+        active: boolean;
         featured: boolean;
+        sortOrder: number;
         brandId: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     deleteProduct(id: string): Promise<{
         message: string;
@@ -600,10 +600,6 @@ export declare class ProductsController {
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -613,24 +609,24 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
+            variantId: string;
             mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
-            variantId: string;
+            sortOrder: number;
         })[];
         product: {
             id: string;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
-            sortOrder: number;
             sku: string | null;
             shortDescription: string | null;
             longDescription: string | null;
@@ -640,28 +636,32 @@ export declare class ProductsController {
             stock: number | null;
             stockStatus: string | null;
             weight: number | null;
+            active: boolean;
             featured: boolean;
+            sortOrder: number;
             brandId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         };
         attributeValues: ({
             attributeValue: {
                 attribute: {
                     id: string;
                     name: string;
+                    slug: string;
+                    type: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    type: string;
-                    slug: string;
                 };
             } & {
                 id: string;
+                value: string;
+                slug: string;
+                referenceValue: string | null;
+                attributeId: string;
+                mediaId: string | null;
                 createdAt: Date;
                 updatedAt: Date;
-                slug: string;
-                value: string;
-                referenceValue: string | null;
-                mediaId: string | null;
-                attributeId: string;
             };
         } & {
             variantId: string;
@@ -669,26 +669,22 @@ export declare class ProductsController {
         })[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
+        productId: string;
         sku: string;
         price: number;
         salePrice: number | null;
         stock: number;
         stockStatus: string;
-        weight: number | null;
         lowStockThreshold: number | null;
-        productId: string;
+        weight: number | null;
+        active: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getProductVariants(productId: string): Promise<({
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -698,35 +694,39 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
+            variantId: string;
             mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
-            variantId: string;
+            sortOrder: number;
         })[];
         attributeValues: ({
             attributeValue: {
                 attribute: {
                     id: string;
                     name: string;
+                    slug: string;
+                    type: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    type: string;
-                    slug: string;
                 };
             } & {
                 id: string;
+                value: string;
+                slug: string;
+                referenceValue: string | null;
+                attributeId: string;
+                mediaId: string | null;
                 createdAt: Date;
                 updatedAt: Date;
-                slug: string;
-                value: string;
-                referenceValue: string | null;
-                mediaId: string | null;
-                attributeId: string;
             };
         } & {
             variantId: string;
@@ -734,26 +734,22 @@ export declare class ProductsController {
         })[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
+        productId: string;
         sku: string;
         price: number;
         salePrice: number | null;
         stock: number;
         stockStatus: string;
-        weight: number | null;
         lowStockThreshold: number | null;
-        productId: string;
+        weight: number | null;
+        active: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
     getVariantById(productId: string, variantId: string): Promise<{
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -763,24 +759,24 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
+            variantId: string;
             mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
-            variantId: string;
+            sortOrder: number;
         })[];
         product: {
             id: string;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
-            sortOrder: number;
             sku: string | null;
             shortDescription: string | null;
             longDescription: string | null;
@@ -790,28 +786,32 @@ export declare class ProductsController {
             stock: number | null;
             stockStatus: string | null;
             weight: number | null;
+            active: boolean;
             featured: boolean;
+            sortOrder: number;
             brandId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         };
         attributeValues: ({
             attributeValue: {
                 attribute: {
                     id: string;
                     name: string;
+                    slug: string;
+                    type: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    type: string;
-                    slug: string;
                 };
             } & {
                 id: string;
+                value: string;
+                slug: string;
+                referenceValue: string | null;
+                attributeId: string;
+                mediaId: string | null;
                 createdAt: Date;
                 updatedAt: Date;
-                slug: string;
-                value: string;
-                referenceValue: string | null;
-                mediaId: string | null;
-                attributeId: string;
             };
         } & {
             variantId: string;
@@ -819,26 +819,22 @@ export declare class ProductsController {
         })[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
+        productId: string;
         sku: string;
         price: number;
         salePrice: number | null;
         stock: number;
         stockStatus: string;
-        weight: number | null;
         lowStockThreshold: number | null;
-        productId: string;
+        weight: number | null;
+        active: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     updateVariant(productId: string, variantId: string, dto: Partial<CreateVariantDto>): Promise<{
         media: ({
             media: {
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                altText: string | null;
-                title: string | null;
                 fileName: string;
                 storedPath: string;
                 publicUrl: string;
@@ -848,24 +844,24 @@ export declare class ProductsController {
                 width: number | null;
                 height: number | null;
                 thumbnail: string | null;
+                altText: string | null;
+                title: string | null;
                 uploadedById: string;
+                createdAt: Date;
+                updatedAt: Date;
             };
         } & {
             id: string;
-            sortOrder: number;
+            variantId: string;
             mediaId: string;
             isThumbnail: boolean;
             isGallery: boolean;
-            variantId: string;
+            sortOrder: number;
         })[];
         product: {
             id: string;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
-            active: boolean;
             slug: string;
-            sortOrder: number;
             sku: string | null;
             shortDescription: string | null;
             longDescription: string | null;
@@ -875,28 +871,32 @@ export declare class ProductsController {
             stock: number | null;
             stockStatus: string | null;
             weight: number | null;
+            active: boolean;
             featured: boolean;
+            sortOrder: number;
             brandId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
         };
         attributeValues: ({
             attributeValue: {
                 attribute: {
                     id: string;
                     name: string;
+                    slug: string;
+                    type: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    type: string;
-                    slug: string;
                 };
             } & {
                 id: string;
+                value: string;
+                slug: string;
+                referenceValue: string | null;
+                attributeId: string;
+                mediaId: string | null;
                 createdAt: Date;
                 updatedAt: Date;
-                slug: string;
-                value: string;
-                referenceValue: string | null;
-                mediaId: string | null;
-                attributeId: string;
             };
         } & {
             variantId: string;
@@ -904,17 +904,17 @@ export declare class ProductsController {
         })[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        active: boolean;
+        productId: string;
         sku: string;
         price: number;
         salePrice: number | null;
         stock: number;
         stockStatus: string;
-        weight: number | null;
         lowStockThreshold: number | null;
-        productId: string;
+        weight: number | null;
+        active: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     deleteVariant(productId: string, variantId: string): Promise<{
         message: string;

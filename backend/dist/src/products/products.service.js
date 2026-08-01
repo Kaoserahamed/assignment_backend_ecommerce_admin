@@ -18,6 +18,11 @@ let ProductsService = class ProductsService {
         this.prisma = prisma;
     }
     async createProduct(dto) {
+        if (dto.price !== undefined && dto.salePrice !== undefined && dto.salePrice !== null) {
+            if (dto.salePrice > dto.price) {
+                throw new common_1.BadRequestException('Sale price cannot exceed regular price');
+            }
+        }
         const existingSlug = await this.prisma.product.findUnique({
             where: { slug: dto.slug },
         });
@@ -237,6 +242,13 @@ let ProductsService = class ProductsService {
         if (!product) {
             throw new common_1.NotFoundException('Product not found');
         }
+        const finalPrice = dto.price !== undefined ? dto.price : product.price;
+        const finalSalePrice = dto.salePrice !== undefined ? dto.salePrice : product.salePrice;
+        if (finalPrice !== undefined && finalPrice !== null && finalSalePrice !== undefined && finalSalePrice !== null) {
+            if (finalSalePrice > finalPrice) {
+                throw new common_1.BadRequestException('Sale price cannot exceed regular price');
+            }
+        }
         if (dto.slug && dto.slug !== product.slug) {
             const existing = await this.prisma.product.findUnique({
                 where: { slug: dto.slug },
@@ -364,6 +376,26 @@ let ProductsService = class ProductsService {
         });
         return { message: 'Product deleted successfully' };
     }
+    async validateUniqueVariantCombination(productId, attributeValueIds, excludeVariantId) {
+        const sortedIds = [...attributeValueIds].sort();
+        const existingVariants = await this.prisma.productVariant.findMany({
+            where: {
+                productId,
+                ...(excludeVariantId && { id: { not: excludeVariantId } }),
+            },
+            include: {
+                attributeValues: true,
+            },
+        });
+        for (const variant of existingVariants) {
+            const variantAttrIds = variant.attributeValues
+                .map((av) => av.attributeValueId)
+                .sort();
+            if (JSON.stringify(variantAttrIds) === JSON.stringify(sortedIds)) {
+                throw new common_1.ConflictException('A variant with this attribute combination already exists for this product');
+            }
+        }
+    }
     async createVariant(productId, dto) {
         const product = await this.prisma.product.findUnique({
             where: { id: productId },
@@ -374,6 +406,12 @@ let ProductsService = class ProductsService {
         if (!product.hasVariants) {
             throw new common_1.BadRequestException('Product does not support variants');
         }
+        if (dto.salePrice !== undefined && dto.salePrice !== null) {
+            if (dto.salePrice > dto.price) {
+                throw new common_1.BadRequestException('Sale price cannot exceed regular price');
+            }
+        }
+        await this.validateUniqueVariantCombination(productId, dto.attributeValueIds);
         const existingSku = await this.prisma.productVariant.findUnique({
             where: { sku: dto.sku },
         });
@@ -492,6 +530,16 @@ let ProductsService = class ProductsService {
         });
         if (!variant || variant.productId !== productId) {
             throw new common_1.NotFoundException('Variant not found');
+        }
+        const finalPrice = dto.price !== undefined ? dto.price : variant.price;
+        const finalSalePrice = dto.salePrice !== undefined ? dto.salePrice : variant.salePrice;
+        if (finalPrice !== undefined && finalPrice !== null && finalSalePrice !== undefined && finalSalePrice !== null) {
+            if (finalSalePrice > finalPrice) {
+                throw new common_1.BadRequestException('Sale price cannot exceed regular price');
+            }
+        }
+        if (dto.attributeValueIds && dto.attributeValueIds.length > 0) {
+            await this.validateUniqueVariantCombination(productId, dto.attributeValueIds, variantId);
         }
         if (dto.sku && dto.sku !== variant.sku) {
             const existing = await this.prisma.productVariant.findUnique({

@@ -45,7 +45,7 @@ let CategoriesController = class CategoriesController {
 exports.CategoriesController = CategoriesController;
 __decorate([
     (0, common_1.Post)(),
-    (0, permissions_decorator_1.RequirePermissions)('categories.create'),
+    (0, permissions_decorator_1.RequirePermissions)('category:create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_category_dto_1.CreateCategoryDto]),
@@ -53,7 +53,7 @@ __decorate([
 ], CategoriesController.prototype, "createCategory", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('categories.view'),
+    (0, permissions_decorator_1.RequirePermissions)('category:read'),
     __param(0, (0, common_1.Query)('includeInactive')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -61,14 +61,14 @@ __decorate([
 ], CategoriesController.prototype, "getAllCategories", null);
 __decorate([
     (0, common_1.Get)('tree'),
-    (0, permissions_decorator_1.RequirePermissions)('categories.view'),
+    (0, permissions_decorator_1.RequirePermissions)('category:read'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "getCategoryTree", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('categories.view'),
+    (0, permissions_decorator_1.RequirePermissions)('category:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -76,7 +76,7 @@ __decorate([
 ], CategoriesController.prototype, "getCategoryById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('categories.update'),
+    (0, permissions_decorator_1.RequirePermissions)('category:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -85,7 +85,7 @@ __decorate([
 ], CategoriesController.prototype, "updateCategory", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('categories.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('category:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

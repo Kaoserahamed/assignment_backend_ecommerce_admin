@@ -9,6 +9,13 @@ export class ProductsService {
   constructor(private readonly prisma: DatabaseService) {}
 
   async createProduct(dto: CreateProductDto) {
+    // Validate sale price does not exceed price
+    if (dto.price !== undefined && dto.salePrice !== undefined && dto.salePrice !== null) {
+      if (dto.salePrice > dto.price) {
+        throw new BadRequestException('Sale price cannot exceed regular price');
+      }
+    }
+
     // Check slug uniqueness
     const existingSlug = await this.prisma.product.findUnique({
       where: { slug: dto.slug },
@@ -108,11 +115,12 @@ export class ProductsService {
 
       // Create media relationships
       if (dto.mediaIds && dto.mediaIds.length > 0) {
+        // Ensure only one thumbnail (first one becomes thumbnail)
         await tx.productMedia.createMany({
           data: dto.mediaIds.map((mediaId, index) => ({
             productId: newProduct.id,
             mediaId,
-            isThumbnail: index === 0,
+            isThumbnail: index === 0, // Only first image is thumbnail
             isGallery: true,
             sortOrder: index,
           })),
@@ -279,6 +287,16 @@ export class ProductsService {
       throw new NotFoundException('Product not found');
     }
 
+    // Validate sale price does not exceed price
+    const finalPrice = dto.price !== undefined ? dto.price : product.price;
+    const finalSalePrice = dto.salePrice !== undefined ? dto.salePrice : product.salePrice;
+    
+    if (finalPrice !== undefined && finalPrice !== null && finalSalePrice !== undefined && finalSalePrice !== null) {
+      if (finalSalePrice > finalPrice) {
+        throw new BadRequestException('Sale price cannot exceed regular price');
+      }
+    }
+
     // Check slug uniqueness if slug is being updated
     if (dto.slug && dto.slug !== product.slug) {
       const existing = await this.prisma.product.findUnique({
@@ -379,11 +397,12 @@ export class ProductsService {
         });
 
         if (dto.mediaIds.length > 0) {
+          // Ensure only one thumbnail (first one becomes thumbnail)
           await tx.productMedia.createMany({
             data: dto.mediaIds.map((mediaId, index) => ({
               productId: id,
               mediaId,
-              isThumbnail: index === 0,
+              isThumbnail: index === 0, // Only first image is thumbnail
               isGallery: true,
               sortOrder: index,
             })),
@@ -442,6 +461,44 @@ export class ProductsService {
 
   // Product Variants
 
+  /**
+   * Validates that a variant combination is unique within a product
+   * Prevents duplicate variants with identical attribute value combinations
+   */
+  private async validateUniqueVariantCombination(
+    productId: string,
+    attributeValueIds: string[],
+    excludeVariantId?: string,
+  ) {
+    // Sort the attribute value IDs to ensure consistent comparison
+    const sortedIds = [...attributeValueIds].sort();
+
+    // Get all existing variants for this product
+    const existingVariants = await this.prisma.productVariant.findMany({
+      where: {
+        productId,
+        ...(excludeVariantId && { id: { not: excludeVariantId } }),
+      },
+      include: {
+        attributeValues: true,
+      },
+    });
+
+    // Check if any existing variant has the same combination
+    for (const variant of existingVariants) {
+      const variantAttrIds = variant.attributeValues
+        .map((av) => av.attributeValueId)
+        .sort();
+
+      // Compare sorted arrays
+      if (JSON.stringify(variantAttrIds) === JSON.stringify(sortedIds)) {
+        throw new ConflictException(
+          'A variant with this attribute combination already exists for this product',
+        );
+      }
+    }
+  }
+
   async createVariant(productId: string, dto: CreateVariantDto) {
     const product = await this.prisma.product.findUnique({
       where: { id: productId },
@@ -454,6 +511,16 @@ export class ProductsService {
     if (!product.hasVariants) {
       throw new BadRequestException('Product does not support variants');
     }
+
+    // Validate sale price does not exceed price
+    if (dto.salePrice !== undefined && dto.salePrice !== null) {
+      if (dto.salePrice > dto.price) {
+        throw new BadRequestException('Sale price cannot exceed regular price');
+      }
+    }
+
+    // Validate unique variant combination
+    await this.validateUniqueVariantCombination(productId, dto.attributeValueIds);
 
     // Check SKU uniqueness
     const existingSku = await this.prisma.productVariant.findUnique({
@@ -510,11 +577,12 @@ export class ProductsService {
 
       // Create media relationships
       if (dto.mediaIds && dto.mediaIds.length > 0) {
+        // Ensure only one thumbnail (first one becomes thumbnail)
         await tx.variantMedia.createMany({
           data: dto.mediaIds.map((mediaId, index) => ({
             variantId: newVariant.id,
             mediaId,
-            isThumbnail: index === 0,
+            isThumbnail: index === 0, // Only first image is thumbnail
             isGallery: true,
             sortOrder: index,
           })),
@@ -600,6 +668,21 @@ export class ProductsService {
       throw new NotFoundException('Variant not found');
     }
 
+    // Validate sale price does not exceed price if being updated
+    const finalPrice = dto.price !== undefined ? dto.price : variant.price;
+    const finalSalePrice = dto.salePrice !== undefined ? dto.salePrice : variant.salePrice;
+    
+    if (finalPrice !== undefined && finalPrice !== null && finalSalePrice !== undefined && finalSalePrice !== null) {
+      if (finalSalePrice > finalPrice) {
+        throw new BadRequestException('Sale price cannot exceed regular price');
+      }
+    }
+
+    // Validate unique variant combination if attribute values are being updated
+    if (dto.attributeValueIds && dto.attributeValueIds.length > 0) {
+      await this.validateUniqueVariantCombination(productId, dto.attributeValueIds, variantId);
+    }
+
     // Check SKU uniqueness if SKU is being updated
     if (dto.sku && dto.sku !== variant.sku) {
       const existing = await this.prisma.productVariant.findUnique({
@@ -670,11 +753,12 @@ export class ProductsService {
         });
 
         if (dto.mediaIds.length > 0) {
+          // Ensure only one thumbnail (first one becomes thumbnail)
           await tx.variantMedia.createMany({
             data: dto.mediaIds.map((mediaId, index) => ({
               variantId,
               mediaId,
-              isThumbnail: index === 0,
+              isThumbnail: index === 0, // Only first image is thumbnail
               isGallery: true,
               sortOrder: index,
             })),

@@ -58,7 +58,7 @@ let AttributesController = class AttributesController {
 exports.AttributesController = AttributesController;
 __decorate([
     (0, common_1.Post)(),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.create'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_attribute_dto_1.CreateAttributeDto]),
@@ -66,14 +66,14 @@ __decorate([
 ], AttributesController.prototype, "createAttribute", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.view'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:read'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AttributesController.prototype, "getAllAttributes", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.view'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -81,7 +81,7 @@ __decorate([
 ], AttributesController.prototype, "getAttributeById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.update'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -90,7 +90,7 @@ __decorate([
 ], AttributesController.prototype, "updateAttribute", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -98,7 +98,7 @@ __decorate([
 ], AttributesController.prototype, "deleteAttribute", null);
 __decorate([
     (0, common_1.Post)(':id/values'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.create'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:create'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -107,7 +107,7 @@ __decorate([
 ], AttributesController.prototype, "createAttributeValue", null);
 __decorate([
     (0, common_1.Get)(':id/values'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.view'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -115,7 +115,7 @@ __decorate([
 ], AttributesController.prototype, "getAttributeValues", null);
 __decorate([
     (0, common_1.Get)(':id/values/:valueId'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.view'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:read'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('valueId')),
     __metadata("design:type", Function),
@@ -124,7 +124,7 @@ __decorate([
 ], AttributesController.prototype, "getAttributeValueById", null);
 __decorate([
     (0, common_1.Put)(':id/values/:valueId'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.update'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('valueId')),
     __param(2, (0, common_1.Body)()),
@@ -134,7 +134,7 @@ __decorate([
 ], AttributesController.prototype, "updateAttributeValue", null);
 __decorate([
     (0, common_1.Delete)(':id/values/:valueId'),
-    (0, permissions_decorator_1.RequirePermissions)('attributes.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('attribute:delete'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Param)('valueId')),
     __metadata("design:type", Function),

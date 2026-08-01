@@ -5,7 +5,7 @@ import { AssignPermissionsDto } from './dto/assign-permissions.dto';
 export declare class RolesService {
     private readonly prisma;
     constructor(prisma: DatabaseService);
-    createRole(dto: CreateRoleDto): Promise<{
+    createRole(dto: CreateRoleDto): Promise<({
         permissions: ({
             permission: {
                 group: {
@@ -19,9 +19,9 @@ export declare class RolesService {
                 id: string;
                 name: string;
                 description: string | null;
+                groupId: string;
                 createdAt: Date;
                 updatedAt: Date;
-                groupId: string;
             };
         } & {
             roleId: string;
@@ -31,10 +31,10 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
-    }>;
+    }) | null>;
     getAllRoles(includeInactive?: boolean): Promise<{
         permissionCount: number;
         userCount: number;
@@ -51,9 +51,9 @@ export declare class RolesService {
                 id: string;
                 name: string;
                 description: string | null;
+                groupId: string;
                 createdAt: Date;
                 updatedAt: Date;
-                groupId: string;
             };
         } & {
             roleId: string;
@@ -65,9 +65,9 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
     }[]>;
     getRoleById(id: string): Promise<{
         permissionCount: number;
@@ -85,9 +85,9 @@ export declare class RolesService {
                 id: string;
                 name: string;
                 description: string | null;
+                groupId: string;
                 createdAt: Date;
                 updatedAt: Date;
-                groupId: string;
             };
         } & {
             roleId: string;
@@ -99,9 +99,9 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
     }>;
     updateRole(id: string, dto: UpdateRoleDto): Promise<{
         permissions: ({
@@ -117,9 +117,9 @@ export declare class RolesService {
                 id: string;
                 name: string;
                 description: string | null;
+                groupId: string;
                 createdAt: Date;
                 updatedAt: Date;
-                groupId: string;
             };
         } & {
             roleId: string;
@@ -129,9 +129,9 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
     }>;
     deleteRole(id: string): Promise<{
         message: string;
@@ -150,9 +150,9 @@ export declare class RolesService {
                 id: string;
                 name: string;
                 description: string | null;
+                groupId: string;
                 createdAt: Date;
                 updatedAt: Date;
-                groupId: string;
             };
         } & {
             roleId: string;
@@ -162,9 +162,9 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        status: boolean;
         createdAt: Date;
         updatedAt: Date;
-        status: boolean;
     }) | null>;
     getRolePermissions(roleId: string): Promise<({
         group: {
@@ -178,8 +178,8 @@ export declare class RolesService {
         id: string;
         name: string;
         description: string | null;
+        groupId: string;
         createdAt: Date;
         updatedAt: Date;
-        groupId: string;
     })[]>;
 }

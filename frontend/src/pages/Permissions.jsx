@@ -2,30 +2,38 @@ import { useState, useEffect } from 'react';
 import axios from '../lib/axios';
 import { Plus, Edit, Trash2, Search } from 'lucide-react';
 import useAuthStore from '../store/authStore';
+import PermissionGate from '../components/PermissionGate';
+import Toast from '../components/Toast';
+import { getErrorMessage } from '../lib/errorMessages';
 
 export default function Permissions() {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [toast, setToast] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     actions: [],
     customAction: '',
   });
-  const hasPermission = useAuthStore((state) => state.hasPermission);
+  const { hasPermission } = useAuthStore();
 
   const standardActions = ['watch', 'create', 'read', 'update', 'delete', 'upload', 'write'];
 
   useEffect(() => {
-    fetchGroups();
+    if (hasPermission('permission:read')) {
+      fetchGroups();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const fetchGroups = async () => {
     try {
       const response = await axios.get('/permissions');
-      setGroups(response.data.data || []);
+      setGroups(response.data?.data || []);
     } catch (error) {
       console.error('Error fetching permissions:', error);
     } finally {
@@ -48,11 +56,13 @@ export default function Permissions() {
 
     try {
       await axios.post('/permissions/groups', payload);
+      setToast({ message: 'Permission group created successfully', type: 'success' });
       setShowModal(false);
       setFormData({ name: '', description: '', actions: [], customAction: '' });
       fetchGroups();
     } catch (error) {
-      alert(error.response?.data?.message || 'Failed to create permission group');
+      const message = getErrorMessage(error, 'Failed to create permission group');
+      setToast({ message, type: 'error' });
     }
   };
 
@@ -67,6 +77,19 @@ export default function Permissions() {
 
   if (loading) {
     return <div className="text-center py-8">Loading...</div>;
+  }
+
+  if (!hasPermission('permission:read')) {
+    return (
+      <div>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">Permissions</h1>
+        </div>
+        <div className="card">
+          <PermissionGate permission="permission:read" action="view permissions" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -218,6 +241,16 @@ export default function Permissions() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          duration={5000}
+          onClose={() => setToast(null)}
+        />
       )}
     </div>
   );

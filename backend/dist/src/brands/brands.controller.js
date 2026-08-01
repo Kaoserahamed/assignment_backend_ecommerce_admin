@@ -42,7 +42,7 @@ let BrandsController = class BrandsController {
 exports.BrandsController = BrandsController;
 __decorate([
     (0, common_1.Post)(),
-    (0, permissions_decorator_1.RequirePermissions)('brands.create'),
+    (0, permissions_decorator_1.RequirePermissions)('brand:create'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_brand_dto_1.CreateBrandDto]),
@@ -50,7 +50,7 @@ __decorate([
 ], BrandsController.prototype, "createBrand", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, permissions_decorator_1.RequirePermissions)('brands.view'),
+    (0, permissions_decorator_1.RequirePermissions)('brand:read'),
     __param(0, (0, common_1.Query)('includeInactive')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -58,7 +58,7 @@ __decorate([
 ], BrandsController.prototype, "getAllBrands", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('brands.view'),
+    (0, permissions_decorator_1.RequirePermissions)('brand:read'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -66,7 +66,7 @@ __decorate([
 ], BrandsController.prototype, "getBrandById", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('brands.update'),
+    (0, permissions_decorator_1.RequirePermissions)('brand:update'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -75,7 +75,7 @@ __decorate([
 ], BrandsController.prototype, "updateBrand", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, permissions_decorator_1.RequirePermissions)('brands.delete'),
+    (0, permissions_decorator_1.RequirePermissions)('brand:delete'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

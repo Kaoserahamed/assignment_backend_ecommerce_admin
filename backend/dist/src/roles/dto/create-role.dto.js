@@ -15,6 +15,7 @@ class CreateRoleDto {
     name;
     description;
     status;
+    permissionIds;
 }
 exports.CreateRoleDto = CreateRoleDto;
 __decorate([
@@ -34,4 +35,10 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], CreateRoleDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsUUID)('4', { each: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], CreateRoleDto.prototype, "permissionIds", void 0);
 //# sourceMappingURL=create-role.dto.js.map

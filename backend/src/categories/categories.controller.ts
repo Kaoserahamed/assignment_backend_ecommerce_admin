@@ -9,37 +9,37 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  @RequirePermissions('categories.create')
+  @RequirePermissions('category:create')
   async createCategory(@Body() dto: CreateCategoryDto) {
     return this.categoriesService.createCategory(dto);
   }
 
   @Get()
-  @RequirePermissions('categories.view')
+  @RequirePermissions('category:read')
   async getAllCategories(@Query('includeInactive') includeInactive?: string) {
     return this.categoriesService.getAllCategories(includeInactive === 'true');
   }
 
   @Get('tree')
-  @RequirePermissions('categories.view')
+  @RequirePermissions('category:read')
   async getCategoryTree() {
     return this.categoriesService.getCategoryTree();
   }
 
   @Get(':id')
-  @RequirePermissions('categories.view')
+  @RequirePermissions('category:read')
   async getCategoryById(@Param('id') id: string) {
     return this.categoriesService.getCategoryById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('categories.update')
+  @RequirePermissions('category:update')
   async updateCategory(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
     return this.categoriesService.updateCategory(id, dto);
   }
 
   @Delete(':id')
-  @RequirePermissions('categories.delete')
+  @RequirePermissions('category:delete')
   async deleteCategory(@Param('id') id: string) {
     return this.categoriesService.deleteCategory(id);
   }

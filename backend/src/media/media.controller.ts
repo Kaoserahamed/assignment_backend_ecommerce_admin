@@ -24,7 +24,7 @@ export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 
   @Post('upload')
-  @RequirePermissions('media.create')
+  @RequirePermissions('media:upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadMedia(
     @UploadedFile() file: Express.Multer.File,
@@ -38,7 +38,7 @@ export class MediaController {
   }
 
   @Get()
-  @RequirePermissions('media.view')
+  @RequirePermissions('media:read')
   async getAllMedia(
     @Query('page', ParseIntPipe) page = 1,
     @Query('limit', ParseIntPipe) limit = 20,
@@ -49,19 +49,19 @@ export class MediaController {
   }
 
   @Get(':id')
-  @RequirePermissions('media.view')
+  @RequirePermissions('media:read')
   async getMediaById(@Param('id') id: string) {
     return this.mediaService.getMediaById(id);
   }
 
   @Put(':id')
-  @RequirePermissions('media.update')
+  @RequirePermissions('media:write')
   async updateMedia(@Param('id') id: string, @Body() dto: UpdateMediaDto) {
     return this.mediaService.updateMedia(id, dto);
   }
 
   @Delete(':id')
-  @RequirePermissions('media.delete')
+  @RequirePermissions('media:delete')
   async deleteMedia(@Param('id') id: string) {
     return this.mediaService.deleteMedia(id);
   }
