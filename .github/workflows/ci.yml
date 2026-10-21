@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [development]
+  pull_request:
+    branches: [development]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm ci
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test
+      - name: Lint backend
+        working-directory: ./backend
+        run: npm run lint
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm test
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+      - name: Build Docker images
+        run: |
+          docker build -t ecommerce-admin-backend ./backend
+          docker build -t ecommerce-admin-frontend ./frontend
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, security]
+    if: github.ref == 'refs/heads/development'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy with Docker Compose
+        run: |
+          docker compose up --build -d
+          sleep 10
+          curl -f http://localhost:3000/auth/session
+          docker compose down
