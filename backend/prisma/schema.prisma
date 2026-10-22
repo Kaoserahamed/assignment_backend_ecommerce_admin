@@ -26,6 +26,11 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   
+  // MFA (TOTP) fields
+  mfaEnabled     Boolean   @default(false)
+  mfaSecret      String?
+  mfaRecoveryCodes String? // JSON array of recovery codes
+  
   mediaUploads Media[]
   
   @@map("users")
