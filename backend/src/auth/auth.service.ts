@@ -1,9 +1,11 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { DatabaseService } from '../database/database.service';
 import { LoginDto } from './dto/login.dto';
+import { OAuthLoginDto } from './dto/oauth-login.dto';
+import { MfaService } from './mfa.service';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +13,7 @@ export class AuthService {
     private readonly prisma: DatabaseService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly mfaService: MfaService,
   ) {}
 
   async login(loginDto: LoginDto) {
@@ -44,13 +47,57 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    // If MFA is enabled, require MFA verification before issuing tokens
+    if (user.mfaEnabled) {
+      return {
+        requiresMfa: true,
+        userId: user.id,
+        message: 'MFA verification required',
+      };
+    }
+
+    return this.issueTokens(user);
+  }
+
+  async verifyMfaLogin(userId: string, token: string) {
+    const isValid = await this.mfaService.verifyMfaToken(userId, token);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid MFA token');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user || !user.active) {
+      throw new UnauthorizedException('User not found or inactive');
+    }
+
+    return this.issueTokens(user);
+  }
+
+  private async issueTokens(user: any) {
     const permissions = user.role.permissions.map((rp) => rp.permission.name);
 
     const payload = {
       sub: user.id,
       email: user.email,
       roleId: user.roleId,
+      role: user.role.name,
       permissions,
+      mfaEnabled: user.mfaEnabled,
     };
 
     const accessToken = this.jwtService.sign(payload);
@@ -66,6 +113,7 @@ export class AuthService {
     });
 
     return {
+      requiresMfa: false,
       accessToken,
       refreshToken,
       user: {
@@ -73,6 +121,7 @@ export class AuthService {
         name: user.name,
         email: user.email,
         role: user.role.name,
+        mfaEnabled: user.mfaEnabled,
       },
     };
   }
@@ -112,7 +161,9 @@ export class AuthService {
         sub: user.id,
         email: user.email,
         roleId: user.roleId,
+        role: user.role.name,
         permissions,
+        mfaEnabled: user.mfaEnabled,
       };
 
       const accessToken = this.jwtService.sign(newPayload);
@@ -128,6 +179,7 @@ export class AuthService {
       });
 
       return {
+        requiresMfa: false,
         accessToken,
         refreshToken: newRefreshToken,
       };
@@ -179,6 +231,94 @@ export class AuthService {
         name: user.role.name,
       },
       permissions,
+      mfaEnabled: user.mfaEnabled,
     };
+  }
+
+  async oauthLogin(profile: any) {
+    // Find or create user by provider ID or email
+    let user = await this.prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: profile.email },
+        ],
+      },
+      include: {
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      // Create a new user with default "Vendor" role
+      const vendorRole = await this.prisma.role.findFirst({
+        where: { name: 'Vendor' },
+      });
+
+      if (!vendorRole) {
+        throw new BadRequestException('Vendor role not configured');
+      }
+
+      const randomPassword = Math.random().toString(36).slice(-12);
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+      user = await this.prisma.user.create({
+        data: {
+          name: profile.name || profile.email,
+          email: profile.email,
+          password: hashedPassword,
+          active: true,
+          roleId: vendorRole.id,
+        },
+        include: {
+          role: {
+            include: {
+              permissions: {
+                include: {
+                  permission: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    return this.issueTokens(user);
+  }
+
+  async oauthLoginManual(oauthDto: OAuthLoginDto) {
+    // Manual OAuth2 login - find user by email and provider
+    const user = await this.prisma.user.findUnique({
+      where: { email: oauthDto.email },
+      include: {
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    if (!user.active) {
+      throw new UnauthorizedException('Account is inactive');
+    }
+
+    return this.issueTokens(user);
   }
 }

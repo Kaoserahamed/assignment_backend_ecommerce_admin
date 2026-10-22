@@ -260,6 +260,95 @@ async function main() {
   console.log('   Email: catalog@ecommerce.com');
   console.log('   Password: admin123');
 
+  // Create Staff Role
+  const staffRole = await prisma.role.upsert({
+    where: { name: 'Staff' },
+    update: {},
+    create: {
+      name: 'Staff',
+      description: 'Staff member with limited operational access',
+      status: true,
+    },
+  });
+
+  const staffPermissionNames = [
+    'dashboard:watch',
+    'product:watch',
+    'product:read',
+    'order:watch',
+    'order:read',
+    'order:update',
+    'inventory:watch',
+    'inventory:read',
+  ];
+
+  // Note: Additional permissions (order, inventory) would need to be added to seed data
+  // For now, assign dashboard and product permissions
+  const staffPermissions = createdPermissions.filter((p) =>
+    staffPermissionNames.includes(p.name),
+  );
+
+  for (const permission of staffPermissions) {
+    await prisma.rolePermission.upsert({
+      where: {
+        roleId_permissionId: {
+          roleId: staffRole.id,
+          permissionId: permission.id,
+        },
+      },
+      update: {},
+      create: {
+        roleId: staffRole.id,
+        permissionId: permission.id,
+      },
+    });
+  }
+
+  console.log('✅ Created Staff role with operational permissions');
+
+  // Create Vendor Role
+  const vendorRole = await prisma.role.upsert({
+    where: { name: 'Vendor' },
+    update: {},
+    create: {
+      name: 'Vendor',
+      description: 'Vendor marketplace partner with product and order access',
+      status: true,
+    },
+  });
+
+  const vendorPermissionNames = [
+    'dashboard:watch',
+    'product:watch',
+    'product:create',
+    'product:read',
+    'product:update',
+    'order:watch',
+    'order:read',
+  ];
+
+  const vendorPermissions = createdPermissions.filter((p) =>
+    vendorPermissionNames.includes(p.name),
+  );
+
+  for (const permission of vendorPermissions) {
+    await prisma.rolePermission.upsert({
+      where: {
+        roleId_permissionId: {
+          roleId: vendorRole.id,
+          permissionId: permission.id,
+        },
+      },
+      update: {},
+      create: {
+        roleId: vendorRole.id,
+        permissionId: permission.id,
+      },
+    });
+  }
+
+  console.log('✅ Created Vendor role with marketplace permissions');
+
   console.log('\n🎉 Seed completed successfully!');
 }
 

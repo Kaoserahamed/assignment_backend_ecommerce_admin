@@ -11,10 +11,10 @@ import { CategoriesModule } from './categories/categories.module';
 import { BrandsModule } from './brands/brands.module';
 import { AttributesModule } from './attributes/attributes.module';
 import { ProductsModule } from './products/products.module';
-import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
-import { PermissionsGuard } from './common/guards/permissions.guard';
+import { JwtAuthGuard } from '@ecommerce/shared';
+import { PermissionsGuard } from '@ecommerce/shared';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { TransformInterceptor } from '@ecommerce/shared';
 
 @Module({
   imports: [

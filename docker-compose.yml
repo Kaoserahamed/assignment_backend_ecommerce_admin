@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: ecommerce_admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://admin:admin123@postgres:5432/ecommerce_admin
+      JWT_SECRET: ${JWT_SECRET:-default-secret}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-default-refresh-secret}
+      JWT_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      PORT: 3000
+    depends_on:
+      - postgres
+
+  product-service:
+    build:
+      context: ./services/product
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+
+  order-service:
+    build:
+      context: ./services/order
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+
+  inventory-service:
+    build:
+      context: ./services/inventory
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+
+  vendor-service:
+    build:
+      context: ./services/vendor
+    ports:
+      - "3004:3004"
+    environment:
+      PORT: 3004
+
+  analytics-service:
+    build:
+      context: ./services/analytics
+    ports:
+      - "3005:3005"
+    environment:
+      PORT: 3005
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
